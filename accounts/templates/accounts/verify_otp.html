@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Verify</title>
-</head>
-<body>
-<h3>{{ request.session.phone_number }}</h3>
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="next">
-</form>
-</body>
-</html>
+{% extends '_base.html' %}
+{% block title %}Verify{% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <h3>{{ request.session.phone_number }}</h3>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type="submit" value="next" class="btn btn-primary mt-2">
+    </form>
+{% endblock %}

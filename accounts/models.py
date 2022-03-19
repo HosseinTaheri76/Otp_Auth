@@ -90,6 +90,11 @@ class OtpVerification(models.Model):
             self.failures += 1
             self.save()
 
+    def _clear_failures(self):
+        if self.failures > 0:
+            self.failures = 0
+            self.save()
+
     def get_code(self):
         if not self.is_blocked:
             if self._is_expired():
@@ -106,6 +111,7 @@ class OtpVerification(models.Model):
         if not self.is_blocked:
             if self.code == code:
                 if not self._is_expired():
+                    self._clear_failures()
                     return True
                 return False
             self._increase_failure_count()
